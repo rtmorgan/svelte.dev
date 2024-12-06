@@ -30,7 +30,7 @@ import {
 
 <blockquote class="tag deprecated">
 
-Use `$effect` instead — see https://svelte.dev/docs/svelte/$effect
+Use [`$effect`](https://svelte.dev/docs/svelte/$effect) instead
 
 </blockquote>
 
@@ -54,7 +54,7 @@ function afterUpdate(fn: () => void): void;
 
 <blockquote class="tag deprecated">
 
-Use `$effect.pre` instead — see https://svelte.dev/docs/svelte/$effect#$effect.pre
+Use [`$effect.pre`](https://svelte.dev/docs/svelte/$effect#$effect.pre) instead
 
 </blockquote>
 
@@ -78,7 +78,7 @@ function beforeUpdate(fn: () => void): void;
 
 <blockquote class="tag deprecated">
 
-Use callback props and/or the `$host()` rune instead — see https://svelte.dev/docs/svelte/v5-migration-guide#Event-changes-Component-events
+Use callback props and/or the `$host()` rune instead — see [migration guide](https://svelte.dev/docs/svelte/v5-migration-guide#Event-changes-Component-events)
 
 </blockquote>
 
@@ -409,13 +409,13 @@ interface Component<
 ): {
 	/**
 	 * @deprecated This method only exists when using one of the legacy compatibility helpers, which
-	 * is a stop-gap solution. See https://svelte.dev/docs/svelte/v5-migration-guide#Components-are-no-longer-classes
+	 * is a stop-gap solution. See [migration guide](https://svelte.dev/docs/svelte/v5-migration-guide#Components-are-no-longer-classes)
 	 * for more info.
 	 */
 	$on?(type: string, callback: (e: any) => void): () => void;
 	/**
 	 * @deprecated This method only exists when using one of the legacy compatibility helpers, which
-	 * is a stop-gap solution. See https://svelte.dev/docs/svelte/v5-migration-guide#Components-are-no-longer-classes
+	 * is a stop-gap solution. See [migration guide](https://svelte.dev/docs/svelte/v5-migration-guide#Components-are-no-longer-classes)
 	 * for more info.
 	 */
 	$set?(props: Partial<Props>): void;
@@ -762,7 +762,7 @@ interface Snippet<Parameters extends unknown[] = []> {/*…*/}
 
 This was the base class for Svelte components in Svelte 4. Svelte 5+ components
 are completely different under the hood. For typing, use `Component` instead.
-To instantiate components, use `mount` instead`.
+To instantiate components, use `mount` instead.
 See [migration guide](/docs/svelte/v5-migration-guide#Components-are-no-longer-classes) for more info.
 
 <div class="ts-block">
@@ -809,7 +809,7 @@ constructor(options: ComponentConstructorOptions<Properties<Props, Slots>>);
 
 - <span class="tag deprecated">deprecated</span> This constructor only exists when using the `asClassComponent` compatibility helper, which
 is a stop-gap solution. Migrate towards using `mount` instead. See
-https://svelte.dev/docs/svelte/v5-migration-guide#Components-are-no-longer-classes for more info.
+[migration guide](https://svelte.dev/docs/svelte/v5-migration-guide#Components-are-no-longer-classes) for more info.
 
 </div>
 
@@ -827,7 +827,7 @@ $destroy(): void;
 <div class="ts-block-property-bullets">
 
 - <span class="tag deprecated">deprecated</span> This method only exists when using one of the legacy compatibility helpers, which
-is a stop-gap solution. See https://svelte.dev/docs/svelte/v5-migration-guide#Components-are-no-longer-classes
+is a stop-gap solution. See [migration guide](https://svelte.dev/docs/svelte/v5-migration-guide#Components-are-no-longer-classes)
 for more info.
 
 </div>
@@ -849,7 +849,7 @@ $on<K extends Extract<keyof Events, string>>(
 <div class="ts-block-property-bullets">
 
 - <span class="tag deprecated">deprecated</span> This method only exists when using one of the legacy compatibility helpers, which
-is a stop-gap solution. See https://svelte.dev/docs/svelte/v5-migration-guide#Components-are-no-longer-classes
+is a stop-gap solution. See [migration guide](https://svelte.dev/docs/svelte/v5-migration-guide#Components-are-no-longer-classes)
 for more info.
 
 </div>
@@ -868,7 +868,7 @@ $set(props: Partial<Props>): void;
 <div class="ts-block-property-bullets">
 
 - <span class="tag deprecated">deprecated</span> This method only exists when using one of the legacy compatibility helpers, which
-is a stop-gap solution. See https://svelte.dev/docs/svelte/v5-migration-guide#Components-are-no-longer-classes
+is a stop-gap solution. See [migration guide](https://svelte.dev/docs/svelte/v5-migration-guide#Components-are-no-longer-classes)
 for more info.
 
 </div>
