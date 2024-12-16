@@ -35,7 +35,7 @@ export default {
 
 ### config
 
-Path to your custom `wrangler.toml` or `wrangler.json` config file.
+Path to your custom `wrangler.toml` config file.
 
 ### platformProxy
 
@@ -43,7 +43,7 @@ Preferences for the emulated `platform.env` local bindings. See the [getPlatform
 
 ## Basic Configuration
 
-This adapter expects to find a [wrangler.toml/wrangler.json](https://developers.cloudflare.com/workers/platform/sites/configuration) file in the project root. It should look something like this:
+This adapter expects to find a [wrangler.toml](https://developers.cloudflare.com/workers/platform/sites/configuration) file in the project root. It should look something like this:
 
 ```toml
 /// file: wrangler.toml
@@ -108,8 +108,6 @@ To include type declarations for your bindings, reference them in your `src/app.
 
 ```ts
 /// file: src/app.d.ts
-import { KVNamespace, DurableObjectNamespace } from '@cloudflare/workers-types';
-
 declare global {
 	namespace App {
 		interface Platform {
