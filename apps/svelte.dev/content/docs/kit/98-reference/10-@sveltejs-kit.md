@@ -94,9 +94,7 @@ Checks whether this is an action failure thrown by `fail`.
 <div class="ts-block">
 
 ```dts
-function isActionFailure(
-	e: unknown
-): e is ActionFailure<undefined>;
+function isActionFailure(e: unknown): e is ActionFailure;
 ```
 
 </div>
@@ -814,6 +812,18 @@ Compress files in `directory` with gzip and brotli, where appropriate. Generates
 
 </div>
 </div></div>
+
+## ClientInit
+
+The [`init`](/docs/kit/hooks#Shared-hooks-init) will be invoked once the app starts in the browser
+
+<div class="ts-block">
+
+```dts
+type ClientInit = () => MaybePromise<void>;
+```
+
+</div>
 
 ## Config
 
@@ -2340,6 +2350,18 @@ respond(request: Request, options: RequestOptions): Promise<Response>;
 <div class="ts-block-property-details"></div>
 </div></div>
 
+## ServerInit
+
+The [`init`](/docs/kit/hooks#Shared-hooks-init) will be invoked before the server responds to its first request
+
+<div class="ts-block">
+
+```dts
+type ServerInit = () => MaybePromise<void>;
+```
+
+</div>
+
 ## ServerInitOptions
 
 <div class="ts-block">
@@ -2574,6 +2596,72 @@ type SubmitFunction<
 ```
 
 </div>
+
+## Transport
+
+The [`transport`](/docs/kit/hooks#Universal-hooks-transport) hook allows you to transport custom types across the server/client boundary.
+
+Each transporter has a pair of `encode` and `decode` functions. On the server, `encode` determines whether a value is an instance of the custom type and, if so, returns a non-falsy encoding of the value which can be an object or an array (or `false` otherwise).
+
+In the browser, `decode` turns the encoding back into an instance of the custom type.
+
+```ts
+import type { Transport } from '@sveltejs/kit';
+
+declare class MyCustomType {
+	data: any
+}
+
+// hooks.js
+export const transport: Transport = {
+	MyCustomType: {
+		encode: (value) => value instanceof MyCustomType && [value.data],
+		decode: ([data]) => new MyCustomType(data)
+	}
+};
+```
+
+<div class="ts-block">
+
+```dts
+type Transport = Record<string, Transporter>;
+```
+
+</div>
+
+## Transporter
+
+A member of the [`transport`](/docs/kit/hooks#Universal-hooks-transport) hook.
+
+<div class="ts-block">
+
+```dts
+interface Transporter<
+	T = any,
+	U = Exclude<
+		any,
+		false | 0 | '' | null | undefined | typeof NaN
+	>
+> {/*…*/}
+```
+
+<div class="ts-block-property">
+
+```dts
+encode: (value: T) => false | U;
+```
+
+<div class="ts-block-property-details"></div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+decode: (data: U) => T;
+```
+
+<div class="ts-block-property-details"></div>
+</div></div>
 
 
 
