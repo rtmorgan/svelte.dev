@@ -51,7 +51,7 @@ Path: {url?.pathname ?? ""}
 </button>
 ```
 
-In a similar manner, the values stored inside e.g. `SvelteMap` are not automatically reactive, so if more complex values such as objects are used, they need to be wrapped in a `$state` in order to make their properties reactive as well.
+In a similar manner, the values stored inside e.g. `SvelteMap` are not automatically reactive, so if more complex values such as objects are used, they need to be wrapped in a `$state` in order to make their properties reactive as well. Alternatively, the whole object can be rewritten on update, which may actually lead to better performance than deep reactive `$state`.
 
 ```svelte
 <script>
@@ -94,7 +94,7 @@ In a similar manner, the values stored inside e.g. `SvelteMap` are not automatic
 	Bob's birthday
 </button>
 
-<!-- This WILL propagate reactively (but subsequent updates to the object won't) -->
+<!-- This WILL propagate reactively -->
 <button
 	onclick={() => {
 		people.set("carol", {name: "Carol", age: 0});
@@ -102,6 +102,18 @@ In a similar manner, the values stored inside e.g. `SvelteMap` are not automatic
 >
 	Carol was born
 </button>
+
+{#if people.has("carol")}
+	<!-- This WILL propagate reactively -->
+	<button
+		onclick={() => {
+			const oldValue = people.get("carol");
+			people.set("carol", {...oldValue, age: oldValue.age + 1});
+		}}
+	>
+		Carol's birthday
+	</button>
+{/if}
 ```
 
 
