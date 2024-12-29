@@ -20,6 +20,7 @@ export default {
 	kit: {
 		adapter: adapter({
 			config: 'wrangler.toml',
+			handlers: './src/handlers.js',
 			platformProxy: {
 				configPath: 'wrangler.toml',
 				environment: undefined,
