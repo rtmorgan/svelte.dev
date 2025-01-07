@@ -45,7 +45,12 @@ todos[0].done = !todos[0].done;
 If you push a new object to the array, it will also be proxified:
 
 ```js
-let todos = [{ done: false, text: 'add more todos' }];
+// @filename: ambient.d.ts
+declare global {
+	const todos: Array<{ done: boolean, text: string }>
+}
+
+// @filename: index.js
 // ---cut---
 todos.push({
 	done: false,
