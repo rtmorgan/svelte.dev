@@ -59,10 +59,13 @@ In a similar manner, the values stored inside e.g. `SvelteMap` are not automatic
 
 	const people = new SvelteMap();
 
+	// A plain object
 	const alice = {name: "Alice", age: 18};
-	people.set("alice", alice);
 
+	// A reactive object
 	const bob = $state({name: "Bob", age: 21});
+
+	people.set("alice", alice);
 	people.set("bob", bob);
 </script>
 
@@ -76,7 +79,7 @@ In a similar manner, the values stored inside e.g. `SvelteMap` are not automatic
 
 <hr />
 
-<!-- This will NOT propagate reactively -->
+<!-- This will NOT propagate reactively, because alice is a plain object -->
 <button
 	onclick={() => {
 		people.get("alice").age++;
@@ -85,7 +88,7 @@ In a similar manner, the values stored inside e.g. `SvelteMap` are not automatic
 	Alice's birthday
 </button>
 
-<!-- This WILL propagate reactively -->
+<!-- This WILL propagate reactively, because bob is a reactive object -->
 <button
 	onclick={() => {
 		people.get("bob").age++;
@@ -94,7 +97,7 @@ In a similar manner, the values stored inside e.g. `SvelteMap` are not automatic
 	Bob's birthday
 </button>
 
-<!-- This WILL propagate reactively -->
+<!-- This WILL propagate reactively, because people is reactive -->
 <button
 	onclick={() => {
 		people.set("carol", {name: "Carol", age: 0});
@@ -104,7 +107,7 @@ In a similar manner, the values stored inside e.g. `SvelteMap` are not automatic
 </button>
 
 {#if people.has("carol")}
-	<!-- This WILL propagate reactively -->
+	<!-- This WILL propagate reactively, because we are replacing the whole carol object -->
 	<button
 		onclick={() => {
 			const oldValue = people.get("carol");
