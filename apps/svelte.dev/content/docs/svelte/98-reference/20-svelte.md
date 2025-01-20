@@ -925,4 +925,21 @@ interface Snippet<Parameters extends unknown[] = []> {/*…*/}
 <div class="ts-block-property-details"></div>
 </div></div>
 
+## StateOptions
+
+<div class="ts-block">
+
+```dts
+interface StateOptions {/*…*/}
+```
+
+<div class="ts-block-property">
+
+```dts
+onchange?: () => unknown;
+```
+
+<div class="ts-block-property-details"></div>
+</div></div>
+
 
