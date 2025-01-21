@@ -1633,7 +1633,7 @@ Since `onNavigate` callbacks are called immediately before a client-side navigat
 
 ## Page
 
-The shape of the `$page` store
+The shape of the [`page`](/docs/kit/$app-state#page) reactive object and the [`$page`](/docs/kit/$app-stores) store.
 
 <div class="ts-block">
 
@@ -1655,7 +1655,7 @@ url: URL;
 
 <div class="ts-block-property-details">
 
-The URL of the current page
+The URL of the current page.
 
 </div>
 </div>
@@ -1668,7 +1668,7 @@ params: Params;
 
 <div class="ts-block-property-details">
 
-The parameters of the current page - e.g. for a route like `/blog/[slug]`, a `{ slug: string }` object
+The parameters of the current page - e.g. for a route like `/blog/[slug]`, a `{ slug: string }` object.
 
 </div>
 </div>
@@ -1681,7 +1681,7 @@ route: {/*…*/}
 
 <div class="ts-block-property-details">
 
-Info about the current route
+Info about the current route.
 
 <div class="ts-block-property-children"><div class="ts-block-property">
 
@@ -1691,7 +1691,7 @@ id: RouteId;
 
 <div class="ts-block-property-details">
 
-The ID of the current route - e.g. for `src/routes/blog/[slug]`, it would be `/blog/[slug]`
+The ID of the current route - e.g. for `src/routes/blog/[slug]`, it would be `/blog/[slug]`.
 
 </div>
 </div></div>
@@ -1707,7 +1707,7 @@ status: number;
 
 <div class="ts-block-property-details">
 
-Http status code of the current page
+HTTP status code of the current page.
 
 </div>
 </div>
