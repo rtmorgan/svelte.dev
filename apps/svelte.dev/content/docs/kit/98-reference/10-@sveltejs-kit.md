@@ -714,6 +714,25 @@ Get the application path including any configured `base` path, e.g. `my-base-pat
 <div class="ts-block-property">
 
 ```dts
+getReroutePath:  () => Promise<string | void>;
+```
+
+<div class="ts-block-property-details">
+
+<div class="ts-block-property-bullets">
+
+- <span class="tag since">available since</span> v2.17.0
+
+</div>
+
+Get the fully resolved path to the file containing the `reroute` hook if it exists.
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
 writeClient: (dest: string) => string[];
 ```
 
