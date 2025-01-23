@@ -714,7 +714,7 @@ Get the application path including any configured `base` path, e.g. `my-base-pat
 <div class="ts-block-property">
 
 ```dts
-getReroutePath:  () => Promise<string | void>;
+getReroutePath: () => Promise<string | void>;
 ```
 
 <div class="ts-block-property-details">
