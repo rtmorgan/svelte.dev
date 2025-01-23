@@ -94,9 +94,7 @@ Checks whether this is an action failure thrown by `fail`.
 <div class="ts-block">
 
 ```dts
-function isActionFailure(
-	e: unknown
-): e is ActionFailure<undefined>;
+function isActionFailure(e: unknown): e is ActionFailure;
 ```
 
 </div>
@@ -157,6 +155,13 @@ function json(
 
 Redirect a request. When called during request handling, SvelteKit will return a redirect response.
 Make sure you're not catching the thrown redirect, which would prevent SvelteKit from handling it.
+
+Most common status codes:
+ * `303 See Other`: redirect as a GET request (often used after a form POST request)
+ * `307 Temporary Redirect`: redirect will keep the request method
+ * `308 Permanent Redirect`: redirect will keep the request method, SEO will be transferred to the new page
+
+[See all redirect status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#redirection_messages)
 
 <div class="ts-block">
 
@@ -337,7 +342,7 @@ The name of the adapter, using for logging. Will typically correspond to the pac
 <div class="ts-block-property">
 
 ```dts
-adapt(builder: Builder): MaybePromise<void>;
+adapt: (builder: Builder) => MaybePromise<void>;
 ```
 
 <div class="ts-block-property-details">
@@ -388,7 +393,7 @@ Test support for `read` from `$app/server`
 <div class="ts-block-property">
 
 ```dts
-emulate?(): MaybePromise<Emulator>;
+emulate?: () => MaybePromise<Emulator>;
 ```
 
 <div class="ts-block-property-details">
@@ -471,7 +476,7 @@ interface BeforeNavigate extends Navigation {/*…*/}
 <div class="ts-block-property">
 
 ```dts
-cancel(): void;
+cancel: () => void;
 ```
 
 <div class="ts-block-property-details">
@@ -508,7 +513,7 @@ Print messages to the console. `log.info` and `log.minor` are silent unless Vite
 <div class="ts-block-property">
 
 ```dts
-rimraf(dir: string): void;
+rimraf: (dir: string) => void;
 ```
 
 <div class="ts-block-property-details">
@@ -521,7 +526,7 @@ Remove `dir` and all its contents.
 <div class="ts-block-property">
 
 ```dts
-mkdirp(dir: string): void;
+mkdirp: (dir: string) => void;
 ```
 
 <div class="ts-block-property-details">
@@ -573,7 +578,7 @@ An array of all routes (including prerendered)
 <div class="ts-block-property">
 
 ```dts
-createEntries(fn: (route: RouteDefinition) => AdapterEntry): Promise<void>;
+createEntries: (fn: (route: RouteDefinition) => AdapterEntry) => Promise<void>;
 ```
 
 <div class="ts-block-property-details">
@@ -593,7 +598,7 @@ Create separate functions that map to one or more routes of your app.
 <div class="ts-block-property">
 
 ```dts
-findServerAssets(routes: RouteDefinition[]): string[];
+findServerAssets: (routes: RouteDefinition[]) => string[];
 ```
 
 <div class="ts-block-property-details">
@@ -606,7 +611,7 @@ Find all the assets imported by server files belonging to `routes`
 <div class="ts-block-property">
 
 ```dts
-generateFallback(dest: string): Promise<void>;
+generateFallback: (dest: string) => Promise<void>;
 ```
 
 <div class="ts-block-property-details">
@@ -619,7 +624,7 @@ Generate a fallback page for a static webserver to use when no route is matched.
 <div class="ts-block-property">
 
 ```dts
-generateEnvModule(): void;
+generateEnvModule: () => void;
 ```
 
 <div class="ts-block-property-details">
@@ -632,7 +637,7 @@ Generate a module exposing build-time environment variables as `$env/dynamic/pub
 <div class="ts-block-property">
 
 ```dts
-generateManifest(opts: { relativePath: string; routes?: RouteDefinition[] }): string;
+generateManifest: (opts: { relativePath: string; routes?: RouteDefinition[] }) => string;
 ```
 
 <div class="ts-block-property-details">
@@ -651,7 +656,7 @@ Generate a server-side manifest to initialise the SvelteKit [server](https://sve
 <div class="ts-block-property">
 
 ```dts
-getBuildDirectory(name: string): string;
+getBuildDirectory: (name: string) => string;
 ```
 
 <div class="ts-block-property-details">
@@ -670,7 +675,7 @@ Resolve a path to the `name` directory inside `outDir`, e.g. `/path/to/.svelte-k
 <div class="ts-block-property">
 
 ```dts
-getClientDirectory(): string;
+getClientDirectory: () => string;
 ```
 
 <div class="ts-block-property-details">
@@ -683,7 +688,7 @@ Get the fully resolved path to the directory containing client-side assets, incl
 <div class="ts-block-property">
 
 ```dts
-getServerDirectory(): string;
+getServerDirectory: () => string;
 ```
 
 <div class="ts-block-property-details">
@@ -696,7 +701,7 @@ Get the fully resolved path to the directory containing server-side code.
 <div class="ts-block-property">
 
 ```dts
-getAppPath(): string;
+getAppPath: () => string;
 ```
 
 <div class="ts-block-property-details">
@@ -709,7 +714,7 @@ Get the application path including any configured `base` path, e.g. `my-base-pat
 <div class="ts-block-property">
 
 ```dts
-writeClient(dest: string): string[];
+writeClient: (dest: string) => string[];
 ```
 
 <div class="ts-block-property-details">
@@ -729,7 +734,7 @@ Write client assets to `dest`.
 <div class="ts-block-property">
 
 ```dts
-writePrerendered(dest: string): string[];
+writePrerendered: (dest: string) => string[];
 ```
 
 <div class="ts-block-property-details">
@@ -749,7 +754,7 @@ Write prerendered files to `dest`.
 <div class="ts-block-property">
 
 ```dts
-writeServer(dest: string): string[];
+writeServer: (dest: string) => string[];
 ```
 
 <div class="ts-block-property-details">
@@ -769,14 +774,14 @@ Write server-side code to `dest`.
 <div class="ts-block-property">
 
 ```dts
-copy(
+copy: (
 	from: string,
 	to: string,
 	opts?: {
 		filter?(basename: string): boolean;
 		replace?: Record<string, string>;
 	}
-): string[];
+) => string[];
 ```
 
 <div class="ts-block-property-details">
@@ -799,7 +804,7 @@ Copy a file or directory.
 <div class="ts-block-property">
 
 ```dts
-compress(directory: string): Promise<void>;
+compress: (directory: string) => Promise<void>;
 ```
 
 <div class="ts-block-property-details">
@@ -814,6 +819,18 @@ Compress files in `directory` with gzip and brotli, where appropriate. Generates
 
 </div>
 </div></div>
+
+## ClientInit
+
+The [`init`](/docs/kit/hooks#Shared-hooks-init) will be invoked once the app starts in the browser
+
+<div class="ts-block">
+
+```dts
+type ClientInit = () => MaybePromise<void>;
+```
+
+</div>
 
 ## Config
 
@@ -830,7 +847,7 @@ interface Cookies {/*…*/}
 <div class="ts-block-property">
 
 ```dts
-get(name: string, opts?: import('cookie').CookieParseOptions): string | undefined;
+get: (name: string, opts?: import('cookie').CookieParseOptions) => string | undefined;
 ```
 
 <div class="ts-block-property-details">
@@ -850,7 +867,7 @@ Gets a cookie that was previously set with `cookies.set`, or from the request he
 <div class="ts-block-property">
 
 ```dts
-getAll(opts?: import('cookie').CookieParseOptions): Array<{ name: string; value: string }>;
+getAll: (opts?: import('cookie').CookieParseOptions) => Array<{ name: string; value: string }>;
 ```
 
 <div class="ts-block-property-details">
@@ -869,11 +886,11 @@ Gets all cookies that were previously set with `cookies.set`, or from the reques
 <div class="ts-block-property">
 
 ```dts
-set(
+set: (
 	name: string,
 	value: string,
 	opts: import('cookie').CookieSerializeOptions & { path: string }
-): void;
+) => void;
 ```
 
 <div class="ts-block-property-details">
@@ -898,7 +915,7 @@ You must specify a `path` for the cookie. In most cases you should explicitly se
 <div class="ts-block-property">
 
 ```dts
-delete(name: string, opts: import('cookie').CookieSerializeOptions & { path: string }): void;
+delete: (name: string, opts: import('cookie').CookieSerializeOptions & { path: string }) => void;
 ```
 
 <div class="ts-block-property-details">
@@ -920,11 +937,11 @@ You must specify a `path` for the cookie. In most cases you should explicitly se
 <div class="ts-block-property">
 
 ```dts
-serialize(
+serialize: (
 	name: string,
 	value: string,
 	opts: import('cookie').CookieSerializeOptions & { path: string }
-): string;
+) => string;
 ```
 
 <div class="ts-block-property-details">
@@ -982,10 +999,10 @@ This allows you to modify response headers or bodies, or bypass SvelteKit entire
 ```dts
 type Handle = (input: {
 	event: RequestEvent;
-	resolve(
+	resolve: (
 		event: RequestEvent,
 		opts?: ResolveOptions
-	): MaybePromise<Response>;
+	) => MaybePromise<Response>;
 }) => MaybePromise<Response>;
 ```
 
@@ -1195,7 +1212,7 @@ Contains the data returned by the route's server `load` function (in `+layout.se
 <div class="ts-block-property">
 
 ```dts
-setHeaders(headers: Record<string, string>): void;
+setHeaders: (headers: Record<string, string>) => void;
 ```
 
 <div class="ts-block-property-details">
@@ -1230,7 +1247,7 @@ You cannot add a `set-cookie` header with `setHeaders` — use the [`cookies`](h
 <div class="ts-block-property">
 
 ```dts
-parent(): Promise<ParentData>;
+parent: () => Promise<ParentData>;
 ```
 
 <div class="ts-block-property-details">
@@ -1246,7 +1263,7 @@ Be careful not to introduce accidental waterfalls when using `await parent()`. I
 <div class="ts-block-property">
 
 ```dts
-depends(...deps: Array<`${string}:${string}`>): void;
+depends: (...deps: Array<`${string}:${string}`>) => void;
 ```
 
 <div class="ts-block-property-details">
@@ -1294,7 +1311,7 @@ export async function load({ depends }) {
 <div class="ts-block-property">
 
 ```dts
-untrack<T>(fn: () => T): T;
+untrack: <T>(fn: () => T) => T;
 ```
 
 <div class="ts-block-property-details">
@@ -1616,7 +1633,7 @@ Since `onNavigate` callbacks are called immediately before a client-side navigat
 
 ## Page
 
-The shape of the `$page` store
+The shape of the [`page`](/docs/kit/$app-state#page) reactive object and the [`$page`](/docs/kit/$app-stores) store.
 
 <div class="ts-block">
 
@@ -1638,7 +1655,7 @@ url: URL;
 
 <div class="ts-block-property-details">
 
-The URL of the current page
+The URL of the current page.
 
 </div>
 </div>
@@ -1651,7 +1668,7 @@ params: Params;
 
 <div class="ts-block-property-details">
 
-The parameters of the current page - e.g. for a route like `/blog/[slug]`, a `{ slug: string }` object
+The parameters of the current page - e.g. for a route like `/blog/[slug]`, a `{ slug: string }` object.
 
 </div>
 </div>
@@ -1664,7 +1681,7 @@ route: {/*…*/}
 
 <div class="ts-block-property-details">
 
-Info about the current route
+Info about the current route.
 
 <div class="ts-block-property-children"><div class="ts-block-property">
 
@@ -1674,7 +1691,7 @@ id: RouteId;
 
 <div class="ts-block-property-details">
 
-The ID of the current route - e.g. for `src/routes/blog/[slug]`, it would be `/blog/[slug]`
+The ID of the current route - e.g. for `src/routes/blog/[slug]`, it would be `/blog/[slug]`.
 
 </div>
 </div></div>
@@ -1690,7 +1707,7 @@ status: number;
 
 <div class="ts-block-property-details">
 
-Http status code of the current page
+HTTP status code of the current page.
 
 </div>
 </div>
@@ -1855,7 +1872,7 @@ You can learn more about making credentialed requests with cookies [here](https:
 <div class="ts-block-property">
 
 ```dts
-getClientAddress(): string;
+getClientAddress: () => string;
 ```
 
 <div class="ts-block-property-details">
@@ -1946,7 +1963,7 @@ The ID of the current route - e.g. for `src/routes/blog/[slug]`, it would be `/b
 <div class="ts-block-property">
 
 ```dts
-setHeaders(headers: Record<string, string>): void;
+setHeaders: (headers: Record<string, string>) => void;
 ```
 
 <div class="ts-block-property-details">
@@ -2060,7 +2077,7 @@ interface ResolveOptions {/*…*/}
 <div class="ts-block-property">
 
 ```dts
-transformPageChunk?(input: { html: string; done: boolean }): MaybePromise<string | undefined>;
+transformPageChunk?: (input: { html: string; done: boolean }) => MaybePromise<string | undefined>;
 ```
 
 <div class="ts-block-property-details">
@@ -2081,7 +2098,7 @@ but they will always be split at sensible boundaries such as `%sveltekit.head%` 
 <div class="ts-block-property">
 
 ```dts
-filterSerializedResponseHeaders?(name: string, value: string): boolean;
+filterSerializedResponseHeaders?: (name: string, value: string) => boolean;
 ```
 
 <div class="ts-block-property-details">
@@ -2102,7 +2119,7 @@ By default, none will be included.
 <div class="ts-block-property">
 
 ```dts
-preload?(input: { type: 'font' | 'css' | 'js' | 'asset'; path: string }): boolean;
+preload?: (input: { type: 'font' | 'css' | 'js' | 'asset'; path: string }) => boolean;
 ```
 
 <div class="ts-block-property-details">
@@ -2284,7 +2301,7 @@ routes: SSRRoute[];
 <div class="ts-block-property">
 
 ```dts
-matchers(): Promise<Record<string, ParamMatcher>>;
+matchers: () => Promise<Record<string, ParamMatcher>>;
 ```
 
 <div class="ts-block-property-details"></div>
@@ -2339,6 +2356,18 @@ respond(request: Request, options: RequestOptions): Promise<Response>;
 
 <div class="ts-block-property-details"></div>
 </div></div>
+
+## ServerInit
+
+The [`init`](/docs/kit/hooks#Shared-hooks-init) will be invoked before the server responds to its first request
+
+<div class="ts-block">
+
+```dts
+type ServerInit = () => MaybePromise<void>;
+```
+
+</div>
 
 ## ServerInitOptions
 
@@ -2422,7 +2451,7 @@ interface ServerLoadEvent<
 <div class="ts-block-property">
 
 ```dts
-parent(): Promise<ParentData>;
+parent: () => Promise<ParentData>;
 ```
 
 <div class="ts-block-property-details">
@@ -2437,7 +2466,7 @@ Be careful not to introduce accidental waterfalls when using `await parent()`. I
 <div class="ts-block-property">
 
 ```dts
-depends(...deps: string[]): void;
+depends: (...deps: string[]) => void;
 ```
 
 <div class="ts-block-property-details">
@@ -2485,7 +2514,7 @@ export async function load({ depends }) {
 <div class="ts-block-property">
 
 ```dts
-untrack<T>(fn: () => T): T;
+untrack: <T>(fn: () => T) => T;
 ```
 
 <div class="ts-block-property-details">
@@ -2552,7 +2581,7 @@ type SubmitFunction<
 	formElement: HTMLFormElement;
 	controller: AbortController;
 	submitter: HTMLElement | null;
-	cancel(): void;
+	cancel: () => void;
 }) => MaybePromise<
 	| void
 	| ((opts: {
@@ -2565,15 +2594,81 @@ type SubmitFunction<
 			 * @param options Set `reset: false` if you don't want the `<form>` values to be reset after a successful submission.
 			 * @param invalidateAll Set `invalidateAll: false` if you don't want the action to call `invalidateAll` after submission.
 			 */
-			update(options?: {
+			update: (options?: {
 				reset?: boolean;
 				invalidateAll?: boolean;
-			}): Promise<void>;
+			}) => Promise<void>;
 	  }) => void)
 >;
 ```
 
 </div>
+
+## Transport
+
+The [`transport`](/docs/kit/hooks#Universal-hooks-transport) hook allows you to transport custom types across the server/client boundary.
+
+Each transporter has a pair of `encode` and `decode` functions. On the server, `encode` determines whether a value is an instance of the custom type and, if so, returns a non-falsy encoding of the value which can be an object or an array (or `false` otherwise).
+
+In the browser, `decode` turns the encoding back into an instance of the custom type.
+
+```ts
+import type { Transport } from '@sveltejs/kit';
+
+declare class MyCustomType {
+	data: any
+}
+
+// hooks.js
+export const transport: Transport = {
+	MyCustomType: {
+		encode: (value) => value instanceof MyCustomType && [value.data],
+		decode: ([data]) => new MyCustomType(data)
+	}
+};
+```
+
+<div class="ts-block">
+
+```dts
+type Transport = Record<string, Transporter>;
+```
+
+</div>
+
+## Transporter
+
+A member of the [`transport`](/docs/kit/hooks#Universal-hooks-transport) hook.
+
+<div class="ts-block">
+
+```dts
+interface Transporter<
+	T = any,
+	U = Exclude<
+		any,
+		false | 0 | '' | null | undefined | typeof NaN
+	>
+> {/*…*/}
+```
+
+<div class="ts-block-property">
+
+```dts
+encode: (value: T) => false | U;
+```
+
+<div class="ts-block-property-details"></div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+decode: (data: U) => T;
+```
+
+<div class="ts-block-property-details"></div>
+</div></div>
 
 
 
