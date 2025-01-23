@@ -985,8 +985,8 @@ type Handle = (input: {
 	resolve(
 		event: RequestEvent,
 		opts?: ResolveOptions
-	): MaybePromise<void | ResponseInit | Response>;
-}) => MaybePromise<void | ResponseInit | Response>;
+	): MaybePromise<Response>;
+}) => MaybePromise<Response>;
 ```
 
 </div>
@@ -1913,22 +1913,6 @@ request: Request;
 <div class="ts-block-property-details">
 
 The original request object
-
-</div>
-</div>
-
-<div class="ts-block-property">
-
-```dts
-socket?: {
-	accept: (init: ResponseInit) => ResponseInit;
-	reject: (status: number, body: any) => Response;
-};
-```
-
-<div class="ts-block-property-details">
-
-The two functions used to control the flow of websocket requests
 
 </div>
 </div>
