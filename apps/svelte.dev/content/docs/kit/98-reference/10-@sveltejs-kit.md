@@ -2565,6 +2565,31 @@ export async function load({ untrack, url }) {
 </div>
 </div></div>
 
+## ServerReroute
+
+<blockquote class="since note">
+
+Available since 2.18.0
+
+</blockquote>
+
+The [`reroute`](/docs/kit/hooks#Server-hooks-reroute) hook on the server allows you to modify the URL before it is used to determine which route to render.
+In contrast to the universal [`reroute`](/docs/kit/hooks#Universal-hooks-reroute) hook, it
+- is allowed to be async (though you should take extra caution to not do long running operations here, as it will delay navigation)
+- also receives headers and cookies (though you cannot modify them)
+
+<div class="ts-block">
+
+```dts
+type ServerReroute = (event: {
+	url: URL;
+	headers: Omit<Headers, 'set' | 'delete' | 'append'>;
+	cookies: { get: Cookies['get'] };
+}) => MaybePromise<void | string>;
+```
+
+</div>
+
 ## Snapshot
 
 The type of `export const snapshot` exported from a page or layout component.
