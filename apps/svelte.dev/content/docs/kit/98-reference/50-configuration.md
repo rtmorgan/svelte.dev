@@ -1118,6 +1118,8 @@ This has several advantages:
 
 The drawback is that for unvisited paths, resolution will take slightly longer (though this is mitigated by [preloading](/docs/kit/link-options#data-sveltekit-preload-data)).
 
+> [!NOTE] When using `reroute` inside `hooks.server.js`, you _must_ use server-side route resolution.
+
 > [!NOTE] When using server-side route resolution and prerendering, the resolution is prerendered along with the route itself.
 
 </div>
