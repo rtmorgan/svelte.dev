@@ -8,7 +8,6 @@ title: @sveltejs/kit
 // @noErrors
 import {
 	VERSION,
-	accept,
 	error,
 	fail,
 	isActionFailure,
@@ -26,20 +25,6 @@ import {
 
 ```dts
 const VERSION: string;
-```
-
-</div>
-
-
-
-## accept
-
-Accepts a WebSocket upgrade request. When called during request handling, SvelteKit will accept the WebSocket upgrade request.
-
-<div class="ts-block">
-
-```dts
-function accept(): Response;
 ```
 
 </div>
@@ -2403,7 +2388,9 @@ respond(request: Request, options: RequestOptions): Promise<Response>;
 <div class="ts-block-property">
 
 ```dts
-resolve(): import('crossws').ResolveHooks;
+resolve(): (
+	info: RequestInit | import('crossws').Peer
+) => Promise<Partial<import('crossws').Hooks>>;
 ```
 
 <div class="ts-block-property-details"></div>
@@ -2623,7 +2610,7 @@ See [WebSockets](/docs/kit/websockets) for more information.
 <div class="ts-block">
 
 ```dts
-type Socket = import('crossws').Hooks;
+type Socket = Partial<import('crossws').Hooks>;
 ```
 
 </div>
