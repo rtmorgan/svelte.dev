@@ -25,7 +25,7 @@ To solve this problem, SvelteKit generates `.d.ts` files for each of your endpoi
 
 ```ts
 /// file: .svelte-kit/types/src/routes/[foo]/[bar]/[baz]/$types.d.ts
-/// link: false
+/// link: true
 import type * as Kit from '@sveltejs/kit';
 
 type RouteParams = {
@@ -84,6 +84,37 @@ export async function load({ params, fetch }) {
 }
 ```
 
+The return types of the load functions are then available through the `$types` module as `PageData` and `LayoutData` respectively, while the union of the return values of all `Actions` is available as `ActionData`. Starting with version 2.16.0, two additional helper types are provided. `PageProps` defines `data: PageData`, as well as `form: ActionData`, when there are actions defined. `LayoutProps` defines `data: LayoutData`, as well as `children: Snippet`:
+
+```svelte
+<!--- file: src/routes/+page.svelte --->
+<script>
+	/** @type {import('./$types').PageProps} */
+	let { data, form } = $props();
+</script>
+```
+
+> [!LEGACY]
+> Before 2.16.0:
+> ```svelte
+> <!--- file: src/routes/+page.svelte --->
+> <script>
+> 	/** @type {{ data: import('./$types').PageData, form: import('./$types').ActionData }} */
+> 	let { data, form } = $props();
+> </script>
+> ```
+>
+> Using Svelte 4:
+> ```svelte
+> <!--- file: src/routes/+page.svelte --->
+> <script>
+>   /** @type {import('./$types').PageData} */
+>   export let data;
+>   /** @type {import('./$types').ActionData} */
+>   export let form;
+> </script>
+> ```
+
 > [!NOTE] For this to work, your own `tsconfig.json` or `jsconfig.json` should extend from the generated `.svelte-kit/tsconfig.json` (where `.svelte-kit` is your [`outDir`](configuration#outDir)):
 >
 > `{ "extends": "./.svelte-kit/tsconfig.json" }`
@@ -96,15 +127,34 @@ The generated `.svelte-kit/tsconfig.json` file contains a mixture of options. So
 /// file: .svelte-kit/tsconfig.json
 {
 	"compilerOptions": {
-		"baseUrl": "..",
 		"paths": {
-			"$lib": "src/lib",
-			"$lib/*": "src/lib/*"
+			"$lib": ["../src/lib"],
+			"$lib/*": ["../src/lib/*"]
 		},
 		"rootDirs": ["..", "./types"]
 	},
-	"include": ["../src/**/*.js", "../src/**/*.ts", "../src/**/*.svelte"],
-	"exclude": ["../node_modules/**", "./**"]
+	"include": [
+		"ambient.d.ts",
+		"non-ambient.d.ts",
+		"./types/**/$types.d.ts",
+		"../vite.config.js",
+		"../vite.config.ts",
+		"../src/**/*.js",
+		"../src/**/*.ts",
+		"../src/**/*.svelte",
+		"../tests/**/*.js",
+		"../tests/**/*.ts",
+		"../tests/**/*.svelte"
+	],
+	"exclude": [
+		"../node_modules/**",
+		"../src/service-worker.js",
+		"../src/service-worker/**/*.js",
+		"../src/service-worker.ts",
+		"../src/service-worker/**/*.ts",
+		"../src/service-worker.d.ts",
+		"../src/service-worker/**/*.d.ts"
+	]
 }
 ```
 
@@ -116,24 +166,22 @@ Others are required for SvelteKit to work properly, and should also be left unto
 	"compilerOptions": {
 		// this ensures that types are explicitly
 		// imported with `import type`, which is
-		// necessary as svelte-preprocess cannot
+		// necessary as Svelte/Vite cannot
 		// otherwise compile components correctly
-		"importsNotUsedAsValues": "error",
+		"verbatimModuleSyntax": true,
 
 		// Vite compiles one TypeScript module
 		// at a time, rather than compiling
 		// the entire module graph
 		"isolatedModules": true,
 
-		// TypeScript cannot 'see' when you
-		// use an imported value in your
-		// markup, so we need this
-		"preserveValueImports": true,
+		// Tell TS it's used only for type-checking
+		"noEmit": true,
 
 		// This ensures both `vite build`
 		// and `svelte-package` work correctly
 		"lib": ["esnext", "DOM", "DOM.Iterable"],
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"module": "esnext",
 		"target": "esnext"
 	}
@@ -187,7 +235,7 @@ interface Locals {}
 
 ## PageData
 
-Defines the common shape of the [$page.data store](/docs/kit/$app-stores#page) - that is, the data that is shared between all pages.
+Defines the common shape of the [page.data state](/docs/kit/$app-state#page) and [$page.data store](/docs/kit/$app-stores#page) - that is, the data that is shared between all pages.
 The `Load` and `ServerLoad` functions in `./$types` will be narrowed accordingly.
 Use optional properties for data that is only present on specific pages. Do not add an index signature (`[key: string]: any`).
 
@@ -201,7 +249,7 @@ interface PageData {}
 
 ## PageState
 
-The shape of the `$page.state` object, which can be manipulated using the [`pushState`](/docs/kit/$app-navigation#pushState) and [`replaceState`](/docs/kit/$app-navigation#replaceState) functions from `$app/navigation`.
+The shape of the `page.state` object, which can be manipulated using the [`pushState`](/docs/kit/$app-navigation#pushState) and [`replaceState`](/docs/kit/$app-navigation#replaceState) functions from `$app/navigation`.
 
 <div class="ts-block">
 
