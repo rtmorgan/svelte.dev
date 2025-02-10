@@ -2650,7 +2650,7 @@ type SubmitFunction<
 				reset?: boolean;
 				invalidateAll?: boolean;
 			}) => Promise<void>;
-	  }) => void)
+	  }) => MaybePromise<void>)
 >;
 ```
 
