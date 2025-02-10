@@ -49,7 +49,7 @@ compilerOptions?: CompileOptions;
 
 </div>
 
-Options passed to [`svelte.compile`](/docs/svelte/svelte-compiler#CompileOptions).
+Options passed to [`svelte.compile`](/docs#compile-time-svelte-compile).
 
 </div>
 </div>
@@ -139,7 +139,7 @@ The `kit` property configures SvelteKit, and can have the following properties:
 
 </div>
 
-Your [adapter](/docs/kit/adapters) is run when executing `vite build`. It determines how the output is converted for different platforms.
+Your [adapter](https://kit.svelte.dev/docs/adapters) is run when executing `vite build`. It determines how the output is converted for different platforms.
 
 <div class="ts-block-property-children">
 
@@ -247,9 +247,9 @@ When pages are prerendered, the CSP header is added via a `<meta http-equiv>` ta
 
 > [!NOTE] When `mode` is `'auto'`, SvelteKit will use nonces for dynamically rendered pages and hashes for prerendered pages. Using nonces with prerendered pages is insecure and therefore forbidden.
 
-> [!NOTE] Note that most [Svelte transitions](/tutorial/svelte/transition) work by creating an inline `<style>` element. If you use these in your app, you must either leave the `style-src` directive unspecified or add `unsafe-inline`.
+> [!NOTE] Note that most [Svelte transitions](/tutorial/transition) work by creating an inline `<style>` element. If you use these in your app, you must either leave the `style-src` directive unspecified or add `unsafe-inline`.
 
-If this level of configuration is insufficient and you have more dynamic requirements, you can use the [`handle` hook](/docs/kit/hooks#Server-hooks-handle) to roll your own CSP.
+If this level of configuration is insufficient and you have more dynamic requirements, you can use the [`handle` hook](https://kit.svelte.dev/docs/hooks#Server-hooks-handle) to roll your own CSP.
 
 <div class="ts-block-property-children">
 
@@ -394,7 +394,7 @@ publicPrefix?: string;
 
 </div>
 
-A prefix that signals that an environment variable is safe to expose to client-side code. See [`$env/static/public`](/docs/kit/$env-static-public) and [`$env/dynamic/public`](/docs/kit/$env-dynamic-public). Note that Vite's [`envPrefix`](https://vitejs.dev/config/shared-options.html#envprefix) must be set separately if you are using Vite's environment variable handling - though use of that feature should generally be unnecessary.
+A prefix that signals that an environment variable is safe to expose to client-side code. See [`$env/static/public`](https://kit.svelte.dev/docs/modules#$env-static-public) and [`$env/dynamic/public`](https://kit.svelte.dev/docs/modules#$env-dynamic-public). Note that Vite's [`envPrefix`](https://vitejs.dev/config/shared-options.html#envprefix) must be set separately if you are using Vite's environment variable handling - though use of that feature should generally be unnecessary.
 
 </div>
 </div>
@@ -414,7 +414,7 @@ privatePrefix?: string;
 
 </div>
 
-A prefix that signals that an environment variable is unsafe to expose to client-side code. Environment variables matching neither the public nor the private prefix will be discarded completely. See [`$env/static/private`](/docs/kit/$env-static-private) and [`$env/dynamic/private`](/docs/kit/$env-dynamic-private).
+A prefix that signals that an environment variable is unsafe to expose to client-side code. Environment variables matching neither the public nor the private prefix will be discarded completely. See [`$env/static/private`](https://kit.svelte.dev/docs/modules#$env-static-private) and [`$env/dynamic/private`](https://kit.svelte.dev/docs/modules#$env-dynamic-private).
 
 </div>
 </div>
@@ -476,7 +476,7 @@ client?: string;
 
 </div>
 
-The location of your client [hooks](/docs/kit/hooks).
+The location of your client [hooks](https://kit.svelte.dev/docs/hooks).
 
 </div>
 </div>
@@ -495,7 +495,7 @@ server?: string;
 
 </div>
 
-The location of your server [hooks](/docs/kit/hooks).
+The location of your server [hooks](https://kit.svelte.dev/docs/hooks).
 
 </div>
 </div>
@@ -515,7 +515,7 @@ universal?: string;
 
 </div>
 
-The location of your universal [hooks](/docs/kit/hooks).
+The location of your universal [hooks](https://kit.svelte.dev/docs/hooks).
 
 </div>
 </div></div>
@@ -556,7 +556,7 @@ params?: string;
 
 </div>
 
-a directory containing [parameter matchers](/docs/kit/advanced-routing#Matching)
+a directory containing [parameter matchers](https://kit.svelte.dev/docs/advanced-routing#matching)
 
 </div>
 </div>
@@ -575,7 +575,7 @@ routes?: string;
 
 </div>
 
-the files that define the structure of your app (see [Routing](/docs/kit/routing))
+the files that define the structure of your app (see [Routing](https://kit.svelte.dev/docs/routing))
 
 </div>
 </div>
@@ -594,7 +594,7 @@ serviceWorker?: string;
 
 </div>
 
-the location of your service worker's entry point (see [Service workers](/docs/kit/service-workers))
+the location of your service worker's entry point (see [Service workers](https://kit.svelte.dev/docs/service-workers))
 
 </div>
 </div>
@@ -725,61 +725,6 @@ are three strategies with different trade-offs:
 
 </div>
 </div>
-<div class="ts-block-property">
-
-```ts
-// @noErrors
-bundleStrategy?: 'split' | 'single' | 'inline';
-```
-
-<div class="ts-block-property-details">
-
-<div class="ts-block-property-bullets">
-
-- <span class="tag">default</span> `'split'`
-- <span class="tag since">available since</span> v2.13.0
-
-</div>
-
-The bundle strategy option affects how your app's JavaScript and CSS files are loaded.
-- If `'split'`, splits the app up into multiple .js/.css files so that they are loaded lazily as the user navigates around the app. This is the default, and is recommended for most scenarios.
-- If `'single'`, creates just one .js bundle and one .css file containing code for the entire app.
-- If `'inline'`, inlines all JavaScript and CSS of the entire app into the HTML. The result is usable without a server (i.e. you can just open the file in your browser).
-
-When using `'split'`, you can also adjust the bundling behaviour by setting [`output.experimentalMinChunkSize`](https://rollupjs.org/configuration-options/#output-experimentalminchunksize) and [`output.manualChunks`](https://rollupjs.org/configuration-options/#output-manualchunks) inside your Vite config's [`build.rollupOptions`](https://vite.dev/config/build-options.html#build-rollupoptions).
-
-If you want to inline your assets, you'll need to set Vite's [`build.assetsInlineLimit`](https://vite.dev/config/build-options.html#build-assetsinlinelimit) option to an appropriate size then import your assets through Vite.
-
-```js
-// @errors: 7031
-/// file: vite.config.js
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
-
-export default defineConfig({
-	plugins: [sveltekit()],
-	build: {
-		// inline all imported assets
-		assetsInlineLimit: Infinity
-	}
-});
-```
-
-```svelte
-/// file: src/routes/+layout.svelte
-<script>
-	// import the asset through Vite
-	import favicon from './favicon.png';
-</script>
-
-<svelte:head>
-	<!-- this asset will be inlined as a base64 URL -->
-	<link rel="icon" href={favicon} />
-</svelte:head>
-```
-
-</div>
-</div>
 
 </div>
 
@@ -829,7 +774,7 @@ base?: '' | `/${string}`;
 
 </div>
 
-A root-relative path that must start, but not end with `/` (e.g. `/base-path`), unless it is the empty string. This specifies where your app is served from and allows the app to live on a non-root path. Note that you need to prepend all your root-relative links with the base value or they will point to the root of your domain, not your `base` (this is how the browser works). You can use [`base` from `$app/paths`](/docs/kit/$app-paths#base) for that: `<a href="{base}/your-page">Link</a>`. If you find yourself writing this often, it may make sense to extract this into a reusable component.
+A root-relative path that must start, but not end with `/` (e.g. `/base-path`), unless it is the empty string. This specifies where your app is served from and allows the app to live on a non-root path. Note that you need to prepend all your root-relative links with the base value or they will point to the root of your domain, not your `base` (this is how the browser works). You can use [`base` from `$app/paths`](https://kit.svelte.dev/docs/modules#$app-paths-base) for that: `<a href="{base}/your-page">Link</a>`. If you find yourself writing this often, it may make sense to extract this into a reusable component.
 
 </div>
 </div>
@@ -854,7 +799,7 @@ Whether to use relative asset paths.
 If `true`, `base` and `assets` imported from `$app/paths` will be replaced with relative asset paths during server-side rendering, resulting in more portable HTML.
 If `false`, `%sveltekit.assets%` and references to build artifacts will always be root-relative paths, unless `paths.assets` is an external URL
 
-[Single-page app](/docs/kit/single-page-apps) fallback pages will always use absolute paths, regardless of this setting.
+[Single-page app](https://kit.svelte.dev/docs/single-page-apps) fallback pages will always use absolute paths, regardless of this setting.
 
 If your app uses a `<base>` element, you should set this to `false`, otherwise asset URLs will incorrectly be resolved against the `<base>` URL rather than the current page.
 
@@ -873,7 +818,7 @@ In 1.0, `undefined` was a valid value, which was set by default. In that case, i
 
 </div>
 
-See [Prerendering](/docs/kit/page-options#prerender).
+See [Prerendering](https://kit.svelte.dev/docs/page-options#prerender).
 
 <div class="ts-block-property-children">
 
@@ -1052,79 +997,6 @@ The value of `url.origin` during prerendering; useful if it is included in rende
 
 </div>
 
-## router
-
-<div class="ts-block-property-bullets">
-
-
-
-</div>
-
-
-
-<div class="ts-block-property-children">
-
-<div class="ts-block-property">
-
-```ts
-// @noErrors
-type?: 'pathname' | 'hash';
-```
-
-<div class="ts-block-property-details">
-
-<div class="ts-block-property-bullets">
-
-- <span class="tag">default</span> `"pathname"`
-- <span class="tag since">available since</span> v2.14.0
-
-</div>
-
-What type of client-side router to use.
-- `'pathname'` is the default and means the current URL pathname determines the route
-- `'hash'` means the route is determined by `location.hash`. In this case, SSR and prerendering are disabled. This is only recommended if `pathname` is not an option, for example because you don't control the webserver where your app is deployed.
-	It comes with some caveats: you can't use server-side rendering (or indeed any server logic), and you have to make sure that the links in your app all start with #/, or they won't work. Beyond that, everything works exactly like a normal SvelteKit app.
-
-</div>
-</div>
-<div class="ts-block-property">
-
-```ts
-// @noErrors
-resolution?: 'client' | 'server';
-```
-
-<div class="ts-block-property-details">
-
-<div class="ts-block-property-bullets">
-
-- <span class="tag">default</span> `"client"`
-- <span class="tag since">available since</span> v2.17.0
-
-</div>
-
-How to determine which route to load when navigating to a new page.
-
-By default, SvelteKit will serve a route manifest to the browser.
-When navigating, this manifest is used (along with the `reroute` hook, if it exists) to determine which components to load and which `load` functions to run.
-Because everything happens on the client, this decision can be made immediately. The drawback is that the manifest needs to be
-loaded and parsed before the first navigation can happen, which may have an impact if your app contains many routes.
-
-Alternatively, SvelteKit can determine the route on the server. This means that for every navigation to a path that has not yet been visited, the server will be asked to determine the route.
-This has several advantages:
-- The client does not need to load the routing manifest upfront, which can lead to faster initial page loads
-- The list of routes is hidden from public view
-- The server has an opportunity to intercept each navigation (for example through a middleware), enabling (for example) A/B testing opaque to SvelteKit
-
-The drawback is that for unvisited paths, resolution will take slightly longer (though this is mitigated by [preloading](/docs/kit/link-options#data-sveltekit-preload-data)).
-
-> [!NOTE] When using server-side route resolution and prerendering, the resolution is prerendered along with the route itself.
-
-</div>
-</div>
-
-</div>
-
 ## serviceWorker
 
 <div class="ts-block-property-bullets">
@@ -1230,17 +1102,17 @@ Not all navigations will result in an error though, for example if the JavaScrip
 /// file: +layout.svelte
 <script>
 	import { beforeNavigate } from '$app/navigation';
-	import { updated } from '$app/state';
+	import { updated } from '$app/stores';
 
 	beforeNavigate(({ willUnload, to }) => {
-		if (updated.current && !willUnload && to?.url) {
+		if ($updated && !willUnload && to?.url) {
 			location.href = to.url.href;
 		}
 	});
 </script>
 ```
 
-If you set `pollInterval` to a non-zero value, SvelteKit will poll for new versions in the background and set the value of [`updated.current`](/docs/kit/$app-state#updated) `true` when it detects one.
+If you set `pollInterval` to a non-zero value, SvelteKit will poll for new versions in the background and set the value of the [`updated`](https://kit.svelte.dev/docs/modules#$app-stores-updated) store to `true` when it detects one.
 
 <div class="ts-block-property-children">
 
