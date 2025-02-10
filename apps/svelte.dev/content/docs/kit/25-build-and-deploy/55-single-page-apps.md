@@ -7,11 +7,11 @@ You can turn a SvelteKit app into a fully client-rendered single-page app (SPA) 
 
 > SPA mode has a large negative performance impact by forcing two network round trips before rendering can begin. This may be acceptable if you are serving an application from the local network (e.g. a mobile app that wraps a locally-served SPA), but probably is not for most websites on the internet especially when considering the latency of mobile devices. It also harms SEO by often causing sites to be downranked for performance (SPAs are much more likely to fail core web vitals), excluding search engines that don't render JS, and causing your site to receive less frequent updates from those that do. And finally, it makes your app inaccessible to users if JavaScript fails or is disabled (which happens [more often than you probably think](https://kryogenix.org/code/browser/everyonehasjs.html)).
 >
-> You can avoid these drawbacks on a given page by [prerendering it](#prerendering-individual-pages). You should thus prerender as many pages as possible when using SPA mode — especially your homepage. If you can prerender all pages, you can simply use [static site generation](adapter-static) rather than a SPA. If you cannot, you should strongly consider using an adapter which supports server side rendering — SvelteKit offers officially supported adapters for multiple different providers that offer free SSR hosting for sites below a certain threshold.
+> You can avoid these drawbacks on a given page by [prerendering it](#prerendering-individual-pages). You should thus prerender as many pages as possible when using SPA mode — especially your homepage. If you can prerender all pages, you can simply use [static site generation](adapter-static) rather than a SPA. Otherwise, you should strongly consider using an adapter which supports server side rendering — SvelteKit has officially supported adapters for various providers that offer free SSR hosting for sites below a certain threshold.
 
 ## Usage
 
-First, disable SSR for the pages you don't want to prerender. These pages will be seved via a fallback page. E.g. to serve all pages via the fallback by default, you can update the root layout as shown below. You should [opt back into prerendering individual pages and directories](#prerendering-individual-pages) where possible.
+First, disable SSR for the pages you don't want to prerender. These pages will be served via the fallback page. E.g. to serve all pages via the fallback by default, you can update the root layout as shown below. You should [opt back into prerendering individual pages and directories](#prerendering-individual-pages) where possible.
 ```js
 /// file: src/routes/+layout.js
 export const ssr = false;
