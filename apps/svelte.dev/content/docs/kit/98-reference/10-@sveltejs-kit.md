@@ -2610,7 +2610,7 @@ restore: (snapshot: T) => void;
 
 ## Socket
 
-Shape of the `export const socket = {..}` object in `+server.js`.
+Shape of the `export const socket = {...}` object in `+server.js`.
 See [WebSockets](/docs/kit/websockets) for more information.
 
 <div class="ts-block">
