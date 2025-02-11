@@ -2446,6 +2446,19 @@ read?: (file: string) => ReadableStream;
 A function that turns an asset filename into a `ReadableStream`. Required for the `read` export from `$app/server` to work
 
 </div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+websocket?: () => boolean;
+```
+
+<div class="ts-block-property-details">
+
+A function that informs SvelteKit if WebSocket connections are supported in a given environment.
+
+</div>
 </div></div>
 
 ## ServerLoad

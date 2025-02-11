@@ -6,7 +6,7 @@ title: $app/server
 
 ```js
 // @noErrors
-import { read } from '$app/server';
+import { read, websocket } from '$app/server';
 ```
 
 ## read
@@ -26,6 +26,27 @@ const text = await asset.text();
 
 ```dts
 function read(asset: string): Response;
+```
+
+</div>
+
+
+
+## websocket
+
+Check if WebSocket connections are supported in the current environment
+
+```js
+// @errors: 7031
+import { websocket } from '$app/server';
+
+const isSupported = websocket();
+```
+
+<div class="ts-block">
+
+```dts
+function websocket(): boolean;
 ```
 
 </div>
