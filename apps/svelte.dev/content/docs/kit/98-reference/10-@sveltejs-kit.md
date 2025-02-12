@@ -2394,7 +2394,7 @@ respond(request: Request, options: RequestOptions): Promise<Response>;
 <div class="ts-block-property">
 
 ```dts
-resolveWebSocketHooks(
+getWebSocketHooksResolver(
 	options: RequestOptions
 ): (info: RequestInit | import('crossws').Peer) => Promise<Partial<import('crossws').Hooks>>;
 ```
