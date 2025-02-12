@@ -205,7 +205,7 @@ function text(
 
 ## Action
 
-Shape of a form action method that is part of `export const actions = {..}` in `+page.server.js`.
+Shape of a form action method that is part of `export const actions = {...}` in `+page.server.js`.
 See [form actions](/docs/kit/form-actions) for more information.
 
 <div class="ts-block">
@@ -296,7 +296,7 @@ type ActionResult<
 
 ## Actions
 
-Shape of the `export const actions = {..}` object in `+page.server.js`.
+Shape of the `export const actions = {...}` object in `+page.server.js`.
 See [form actions](/docs/kit/form-actions) for more information.
 
 <div class="ts-block">
