@@ -366,7 +366,7 @@ supports?: {/*…*/}
 
 <div class="ts-block-property-details">
 
-Checks called during dev and build to determine whether specific features will work in production with this adapter
+Checks called during dev and build to determine whether specific features will work in production with this adapter.
 
 <div class="ts-block-property-children"><div class="ts-block-property">
 
@@ -382,7 +382,19 @@ read?: (details: { config: any; route: { id: string } }) => boolean;
 
 </div>
 
-Test support for `read` from `$app/server`
+Test support for `read` from `$app/server`.
+
+</div>
+</div>
+<div class="ts-block-property">
+
+```dts
+webSockets?: () => boolean;
+```
+
+<div class="ts-block-property-details">
+
+Test support for the `socket` export from a `+server.js` file.
 
 </div>
 </div></div>
@@ -399,7 +411,7 @@ emulate?: () => MaybePromise<Emulator>;
 <div class="ts-block-property-details">
 
 Creates an `Emulator`, which allows the adapter to influence the environment
-during dev, build and prerendering
+during dev, build and prerendering.
 
 </div>
 </div></div>
@@ -2444,19 +2456,6 @@ read?: (file: string) => ReadableStream;
 <div class="ts-block-property-details">
 
 A function that turns an asset filename into a `ReadableStream`. Required for the `read` export from `$app/server` to work
-
-</div>
-</div>
-
-<div class="ts-block-property">
-
-```dts
-websocket?: () => boolean;
-```
-
-<div class="ts-block-property-details">
-
-A function that informs SvelteKit if WebSocket connections are supported in a given environment.
 
 </div>
 </div></div>
