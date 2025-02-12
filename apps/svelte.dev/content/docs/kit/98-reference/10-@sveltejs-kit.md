@@ -2320,6 +2320,14 @@ routes: SSRRoute[];
 <div class="ts-block-property">
 
 ```dts
+prerendered_routes: Set<string>;
+```
+
+<div class="ts-block-property-details"></div>
+</div>
+<div class="ts-block-property">
+
+```dts
 matchers: () => Promise<Record<string, ParamMatcher>>;
 ```
 
