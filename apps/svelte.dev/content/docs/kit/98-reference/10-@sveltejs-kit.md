@@ -2408,7 +2408,9 @@ respond(request: Request, options: RequestOptions): Promise<Response>;
 ```dts
 getWebSocketHooksResolver(
 	options: RequestOptions
-): (info: RequestInit | import('crossws').Peer) => Promise<Partial<import('crossws').Hooks>>;
+): (
+	info: RequestInit | import('crossws').Peer
+) => Promise<Partial<import('crossws').Hooks> & { upgrade: import('crossws').Hooks['upgrade'] }>;
 ```
 
 <div class="ts-block-property-details"></div>
