@@ -14,6 +14,7 @@ import {
 	isHttpError,
 	isRedirect,
 	json,
+	normalizeUrl,
 	redirect,
 	text
 } from '@sveltejs/kit';
@@ -145,6 +146,34 @@ function json(
 	data: any,
 	init?: ResponseInit | undefined
 ): Response;
+```
+
+</div>
+
+
+
+## normalizeUrl
+
+Strips possible SvelteKit-internal suffixes and trailing slashes from the URL pathname.
+Returns the normalized URL as well as a method for adding the potential suffix back
+based on a new pathname (possibly including search) or URL.
+```js
+// @errors: 7031
+import { normalizeUrl } from '@sveltejs/kit';
+
+const { url, denormalize } = normalizeUrl('/blog/post/__data.json');
+console.log(url.pathname); // /blog/post
+console.log(denormalize('/blog/post/a')); // /blog/post/a/__data.json
+```
+
+<div class="ts-block">
+
+```dts
+function normalizeUrl(url: URL | string): {
+	url: URL;
+	wasNormalized: boolean;
+	denormalize: (url?: string | URL) => URL;
+};
 ```
 
 </div>
@@ -1937,7 +1966,7 @@ fetch: typeof fetch;
 - During server-side rendering, the response will be captured and inlined into the rendered HTML by hooking into the `text` and `json` methods of the `Response` object. Note that headers will _not_ be serialized, unless explicitly included via [`filterSerializedResponseHeaders`](https://svelte.dev/docs/kit/hooks#Server-hooks-handle)
 - During hydration, the response will be read from the HTML, guaranteeing consistency and preventing an additional network request.
 
-You can learn more about making credentialed requests with cookies [here](https://svelte.dev/docs/kit/load#Cookies)
+You can learn more about making credentialed requests with cookies [here](https://svelte.dev/docs/kit/load#Cookies).
 
 </div>
 </div>
@@ -1976,7 +2005,7 @@ params: Params;
 
 <div class="ts-block-property-details">
 
-The parameters of the current route - e.g. for a route like `/blog/[slug]`, a `{ slug: string }` object
+The parameters of the current route - e.g. for a route like `/blog/[slug]`, a `{ slug: string }` object.
 
 </div>
 </div>
@@ -2002,7 +2031,7 @@ request: Request;
 
 <div class="ts-block-property-details">
 
-The original request object
+The original request object.
 
 </div>
 </div>
@@ -2015,7 +2044,7 @@ route: {/*…*/}
 
 <div class="ts-block-property-details">
 
-Info about the current route
+Info about the current route.
 
 <div class="ts-block-property-children"><div class="ts-block-property">
 
@@ -2025,7 +2054,7 @@ id: RouteId;
 
 <div class="ts-block-property-details">
 
-The ID of the current route - e.g. for `src/routes/blog/[slug]`, it would be `/blog/[slug]`
+The ID of the current route - e.g. for `src/routes/blog/[slug]`, it would be `/blog/[slug]`.
 
 </div>
 </div></div>
@@ -2134,7 +2163,9 @@ The [`reroute`](/docs/kit/hooks#Universal-hooks-reroute) hook allows you to modi
 <div class="ts-block">
 
 ```dts
-type Reroute = (event: { url: URL }) => void | string;
+type Reroute = (event: {
+	url: URL;
+}) => MaybePromise<void | string>;
 ```
 
 </div>
@@ -2325,7 +2356,11 @@ appPath: string;
 assets: Set<string>;
 ```
 
-<div class="ts-block-property-details"></div>
+<div class="ts-block-property-details">
+
+Static files from `kit.config.files.assets` and the service worker (if any).
+
+</div>
 </div>
 
 <div class="ts-block-property">
@@ -2395,7 +2430,7 @@ server_assets: Record<string, number>;
 
 <div class="ts-block-property-details">
 
-A `[file]: size` map of all assets imported by server code
+A `[file]: size` map of all assets imported by server code.
 
 </div>
 </div></div>
