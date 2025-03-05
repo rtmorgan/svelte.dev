@@ -1083,6 +1083,19 @@ Whether the file was compiled in runes mode, either because of an explicit optio
 For `compileModule`, this is always `true`
 
 </div>
+</div>
+<div class="ts-block-property">
+
+```dts
+hasUnscopedGlobalCss: boolean;
+```
+
+<div class="ts-block-property-details">
+
+Whether the component contains a top level :global selector or not
+For `compileModule`, this is always `true`
+
+</div>
 </div></div>
 
 </div>
