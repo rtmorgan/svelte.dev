@@ -378,7 +378,7 @@ read?: (details: { config: any; route: { id: string } }) => boolean;
 
 <div class="ts-block-property-bullets">
 
-- `config` The merged route config
+- `details.config` The merged route config
 
 </div>
 
@@ -389,12 +389,47 @@ Test support for `read` from `$app/server`.
 <div class="ts-block-property">
 
 ```dts
-webSockets?: () => boolean;
+webSockets?: {/*…*/}
+```
+
+<div class="ts-block-property-details">
+
+<div class="ts-block-property-children"><div class="ts-block-property">
+
+```dts
+socket: () => boolean;
 ```
 
 <div class="ts-block-property-details">
 
 Test support for the `socket` export from a `+server.js` file.
+
+</div>
+</div>
+<div class="ts-block-property">
+
+```dts
+getPeers: (details: { route: { id: string } }) => boolean;
+```
+
+<div class="ts-block-property-details">
+
+Test support for `getPeers` from `$app/server`.
+
+</div>
+</div>
+<div class="ts-block-property">
+
+```dts
+publish: (details: { route: { id: string } }) => boolean;
+```
+
+<div class="ts-block-property-details">
+
+Test support for `publish` from `$app/server`.
+
+</div>
+</div></div>
 
 </div>
 </div></div>
@@ -2444,7 +2479,7 @@ env: Record<string, string>;
 
 <div class="ts-block-property-details">
 
-A map of environment variables
+A map of environment variables.
 
 </div>
 </div>
@@ -2457,7 +2492,33 @@ read?: (file: string) => ReadableStream;
 
 <div class="ts-block-property-details">
 
-A function that turns an asset filename into a `ReadableStream`. Required for the `read` export from `$app/server` to work
+A function that turns an asset filename into a `ReadableStream`. Required for the `read` export from `$app/server` to work.
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+peers?: import('crossws').AdapterInstance['peers'];
+```
+
+<div class="ts-block-property-details">
+
+A `Set` of WebSocket `Peer` instances. Required for the `getPeers` export from `$app/server` to work.
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+publish?: import('crossws').AdapterInstance['publish'];
+```
+
+<div class="ts-block-property-details">
+
+A function that publishes a message to WebSocket subscribers of a topic. Required for the `publish` export from `$app/server` to work.
 
 </div>
 </div></div>
@@ -2630,10 +2691,73 @@ See [WebSockets](/docs/kit/websockets) for more information.
 <div class="ts-block">
 
 ```dts
-type Socket = Partial<import('crossws').Hooks>;
+interface Socket {/*…*/}
 ```
 
+<div class="ts-block-property">
+
+```dts
+upgrade?: (request: RequestEvent) => MaybePromise<Response | ResponseInit | void>;
+```
+
+<div class="ts-block-property-details">
+
+Upgrading.
+
 </div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+message?: import('crossws').Hooks['message'];
+```
+
+<div class="ts-block-property-details">
+
+A message is received.
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+open?: import('crossws').Hooks['open'];
+```
+
+<div class="ts-block-property-details">
+
+A socket is opened.
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+close?: import('crossws').Hooks['close'];
+```
+
+<div class="ts-block-property-details">
+
+A socket is closed
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+error?: import('crossws').Hooks['error'];
+```
+
+<div class="ts-block-property-details">
+
+An error occurs.
+
+</div>
+</div></div>
 
 ## SubmitFunction
 

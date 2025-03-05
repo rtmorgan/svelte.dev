@@ -6,12 +6,67 @@ title: $app/server
 
 ```js
 // @noErrors
-import { read } from '$app/server';
+import { getPeers, publish, read } from '$app/server';
 ```
+
+## getPeers
+
+Returns a set of connected WebSocket peers.
+See [Peer](https://crossws.unjs.io/guide/peer) for more information.
+
+```js
+// @errors: 7031
+import { getPeers } from '$app/server';
+
+const peers = getPeers();
+peers.forEach((peer) => {
+	// ...
+});
+```
+
+<div class="ts-block">
+
+```dts
+function getPeers(): import('crossws').AdapterInstance['peers'];
+```
+
+</div>
+
+
+
+## publish
+
+Send a message to WebSocket peer subscribers of a given topic.
+See [Pub / Sub](https://crossws.unjs.io/guide/pubsub) for more information.
+
+```js
+// @errors: 7031
+import { publish } from '$app/server';
+
+publish('chat', { message: 'Hello, world!' });
+```
+
+<div class="ts-block">
+
+```dts
+function publish(
+	topic: string,
+	data: unknown,
+	options?:
+		| {
+				compress?: boolean;
+		  }
+		| undefined
+): void;
+```
+
+</div>
+
+
 
 ## read
 
-Read the contents of an imported asset from the filesystem
+Read the contents of an imported asset from the filesystem.
 
 ```js
 // @errors: 7031
