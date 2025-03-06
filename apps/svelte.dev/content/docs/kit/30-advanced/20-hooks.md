@@ -310,6 +310,8 @@ Since version 2.18, the `reroute` hook can be asynchronous, allowing it to (for 
 /** @type {import('@sveltejs/kit').Reroute} */
 export function reroute({ url, fetch }) {
 	// Ask a special endpoint within your app about the destination
+	if (url.pathname === '/api/reroute') return;
+
 	const api = new URL('/api/reroute', url);
 	api.searchParams.set('pathname', url.pathname);
 
